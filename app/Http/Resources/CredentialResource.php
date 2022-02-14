@@ -16,6 +16,7 @@ class CredentialResource extends JsonResource
     {
         return[
             'user' => new UserResource(auth()->user()),
+            'id' => $this->id,
             'bank' => $this->bank,
             'shaba_id' => $this->shaba_id,
             'card_id' => $this->card_id,

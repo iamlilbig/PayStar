@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\PaymentMethods\PaymentContract;
+use App\Models\Credential;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(PaymentContract::class, function () {
-            $container = 'App\Http\PaymentMethods\\'.request()->bank.'Pay';
+            $bank = request()->credential->bank;
+            $container = 'App\Http\PaymentMethods\\'.$bank.'Pay';
             return new $container();
         });
     }

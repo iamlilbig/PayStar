@@ -6,5 +6,5 @@ use Illuminate\Http\Request;
 
 interface PaymentContract
 {
-    public function pay(Request $request);
+    public function __construct();
 }

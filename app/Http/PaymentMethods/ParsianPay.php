@@ -5,18 +5,23 @@ use App\Exceptions\v1\NotMatchCredentialException;
 use Illuminate\Http\Request;
 class ParsianPay implements PaymentContract
 {
-    public function pay(Request $request)
+    public array $paymentInformation;
+
+    public function __construct()
     {
-        if($request->reason_description != null && $request->payment_number != null){
-            return [
-                'amount' => $request->amount,
-                'description' => $request->description,
-                'destination_firstname' => $request->destination_firstname,
-                'destination_lastname' => $request->destination_lastname,
-                'destination_number' => $request->destination_number,
-                'second_password' => $request->second_password,
+        if(request()->second_password != null){
+            $this->paymentInformation = [
+                'credential_id' => request()->credential->id,
+                'amount' => request()->amount,
+                'description' => request()->description,
+                'destination_firstname' => request()->destination_firstname,
+                'destination_lastname' => request()->destination_lastname,
+                'destination_number' => request()->destination_number,
+                'second_password' => request()->second_password,
             ];
         }
-        throw new NotMatchCredentialException();
+        else {
+            throw new NotMatchCredentialException();
+        }
     }
 }

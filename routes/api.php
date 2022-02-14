@@ -36,7 +36,7 @@ Route::prefix('v1')->group(function (){
          * Manage Credit Carts
          */
 
-        Route::prefix('credential')->group(function (){
+        Route::prefix('credentials')->group(function (){
             Route::get('',[
                 \App\Http\Controllers\v1\CredentialController::class,'index'
             ]);
@@ -51,6 +51,24 @@ Route::prefix('v1')->group(function (){
 
             Route::get('{credential}',[
                 \App\Http\Controllers\v1\CredentialController::class,'show'
+            ]);
+        });
+
+        /*
+         * Manage Payments
+         */
+
+        Route::prefix('payments')->group(function (){
+            Route::post('',[
+                \App\Http\Controllers\v1\PaymentController::class,'store'
+            ]);
+
+            Route::get('',[
+                \App\Http\Controllers\v1\PaymentController::class,'index'
+            ]);
+
+            Route::get('{payment}',[
+                \App\Http\Controllers\v1\PaymentController::class,'show'
             ]);
         });
 

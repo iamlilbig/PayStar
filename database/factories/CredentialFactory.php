@@ -18,11 +18,17 @@ class CredentialFactory extends Factory
     public function definition()
     {
         return [
-            'bank' => 'Keshavarzi',
+            'bank' => $this->getBank(),
             'shaba_id' => 'IR'.rand(11111111111,99999999999).rand(1111111111111,9999999999999),
             'card_id' => rand(1111111111111111,9999999999999999),
             'account_id' => rand(1111111111111,9999999999999),
             'expire_time' => '04-04',
         ];
+    }
+
+    private function getBank(): string
+    {
+        $banks = ['Keshavarzi','Ayandeh','Parsian'];
+        return $banks[rand(0,2)];
     }
 }

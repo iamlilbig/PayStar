@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Credential::class);
-            $table->boolean('status');
+            $table->boolean('status')->nullable();
             $table->integer('amount');
             $table->string('description');
             $table->string('destination_firstname');

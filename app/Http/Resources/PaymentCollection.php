@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Credential;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class PaymentCollection extends ResourceCollection
@@ -14,6 +15,8 @@ class PaymentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection->map(function($item){
+            return new PaymentResource($item);
+        });
     }
 }

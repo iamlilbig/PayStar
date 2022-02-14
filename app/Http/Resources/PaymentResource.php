@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Credential;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PaymentResource extends JsonResource
@@ -14,6 +15,14 @@ class PaymentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'credential' => new CredentialResource(Credential::find($this->credential_id)),
+            'id' => $this->id,
+            'status' => $this->status,
+            'amount' => $this->amount,
+            'description' => $this->description,
+            'destination_firstname' => $this->destination_firstname,
+            'destination_lastname' => $this->destination_lastname,
+            'destination_number' => $this->destination_number,];
     }
 }

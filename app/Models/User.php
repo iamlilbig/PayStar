@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Credential::class);
     }
+
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class,Credential::class);
+    }
 }

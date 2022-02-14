@@ -16,7 +16,7 @@ class CredentialTest extends TestCase
     public function test_store()
     {
 
-        $response = $this->post('/api/v1/user/credential',[
+        $response = $this->post('/api/v1/user/credentials',[
             'bank' => 'Keshavarzi',
             'shaba_id' => 'IR'.rand(11111111111,99999999999).rand(1111111111111,9999999999999),
             'card_id' => rand(1111111111111111,9999999999999999),
@@ -47,7 +47,7 @@ class CredentialTest extends TestCase
 
         $user = User::factory(1)->has(Credential::factory()->count(rand(5,20)))->create();
 
-        $response = $this->get('/api/v1/user/credential',[
+        $response = $this->get('/api/v1/user/credentials',[
             'token' => $user->first()->token
         ]);
 
@@ -73,7 +73,7 @@ class CredentialTest extends TestCase
     {
         $user = User::factory(1)->has(Credential::factory()->count(rand(5,20)))->create();
 
-        $response = $this->get('/api/v1/user/credential/'.$user->first()->credentials->first()->id,[
+        $response = $this->get('/api/v1/user/credentials/'.$user->first()->credentials->first()->id,[
             'token' => $user->first()->token
         ]);
 
@@ -96,7 +96,7 @@ class CredentialTest extends TestCase
     {
         $user = User::factory(1)->has(Credential::factory()->count(rand(5,20)))->create();
 
-        $response = $this->delete('/api/v1/user/credential/'.$user->first()->credentials->first()->id,[],[
+        $response = $this->delete('/api/v1/user/credentials/'.$user->first()->credentials->first()->id,[],[
             'token' => $user->first()->token
         ]);
 

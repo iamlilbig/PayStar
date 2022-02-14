@@ -16,6 +16,7 @@ class CredentialCollection extends ResourceCollection
     {
         return $this->collection->map(function($item){
             return [
+                'id' => $item->id,
                 'bank' => $item->bank,
                 'shaba_id' => $item->shaba_id,
                 'card_id' => $item->card_id,

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Credential;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class PaymentRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class PaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,18 @@ class PaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'credential'=> ['required'],
+            'amount' => ['required'],
+            'description' => ['required'],
+            'destination_firstname' => ['required'],
+            'destination_lastname' => ['required'],
+            'destination_number' => ['required'],
+            'deposit' =>[],
+            'source_firstname' => [],
+            'source_lastname' => [],
+            'payment_number' => [],
+            'reason_description' => [],
+            'second_password' => [],
         ];
     }
 }
