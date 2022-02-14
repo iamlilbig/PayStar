@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Exceptions\v1\NotMatchCredentialException;
 use App\Http\Controllers\Controller;
 use App\Http\PaymentMethods\PaymentContract;
+use App\Http\Resources\PaymentCollection;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -13,11 +15,18 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        $credential = auth()->user()->payments;
+        return response()->json(
+            [
+                'massage' => 'successes',
+                'data' => new PaymentCollection($credential),
+            ],
+            200
+        );
     }
 
     /**
@@ -38,17 +47,6 @@ class PaymentController extends Controller
             ],
             200
         );
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
 }

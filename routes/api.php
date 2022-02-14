@@ -67,9 +67,6 @@ Route::prefix('v1')->group(function (){
                 \App\Http\Controllers\v1\PaymentController::class,'index'
             ]);
 
-            Route::get('{payment}',[
-                \App\Http\Controllers\v1\PaymentController::class,'show'
-            ]);
         });
 
     });

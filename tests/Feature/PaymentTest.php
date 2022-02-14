@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Credential;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -144,22 +145,10 @@ class PaymentTest extends TestCase
      */
     public function test_get_all_payments()
     {
-        $user = User::factory(1)->has(Credential::factory()->count(1)->state([
-            'bank' => 'Parsian'
-        ]))->create();
-
-        $this->post('/api/v1/user/payments/',[
-            'credential'=> Credential::find($user->first()->credentials->first()->id),
-            'amount' => rand(10000,99999999),
-            'description' => Str::random(30),
-            'destination_firstname' => Str::random(rand(3,33)),
-            'destination_lastname' => Str::random(rand(3,33)),
-            'destination_number' => rand(1111111111111,9999999999999),
-            'second_password' => rand(111111,999999),
-        ],['token' => $user->first()->token]);
+        $user = User::factory(1)->has(Credential::factory()->count(1)->has(Payment::factory()->count(10)))->create();
 
 
-        $response = $this->get('/api/v1/user/payment/'.$user->first()->credentials->first()->payments->first()->id,[
+        $response = $this->get('/api/v1/user/payments/',[
             'token' => $user->first()->token
         ]);
 
@@ -179,53 +168,6 @@ class PaymentTest extends TestCase
                     'destination_lastname',
                     'destination_number',
                 ]
-            ],
-        ]);
-
-
-        $response->assertStatus(200);
-    }
-
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_get_single_payment()
-    {//todo
-        $user = User::factory(1)->has(Credential::factory()->count(1)->state([
-            'bank' => 'Parsian'
-        ]))->create();
-
-        $this->post('/api/v1/user/payments/'.$user->first()->credentials->first()->id,[
-            'amount' => rand(10000,99999999),
-            'description' => Str::random(30),
-            'destination_firstname' => Str::random(rand(3,33)),
-            'destination_lastname' => Str::random(rand(3,33)),
-            'destination_number' => rand(1111111111111,9999999999999),
-            'second_password' => rand(111111,999999),
-        ],['token' => $user->first()->token]);
-
-
-        $response = $this->get('/api/v1/user/payment/'.$user->first()->credentials->first()->payments->first()->id,[
-            'token' => $user->first()->token
-        ]);
-
-
-
-        //Get data Test
-        $response->assertJsonStructure([
-            "massage",
-            "data" => [
-                'credential',
-                'id',
-                'status',
-                'amount',
-                'description',
-                'destination_firstname',
-                'destination_lastname',
-                'destination_number',
             ],
         ]);
 
