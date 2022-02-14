@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('credentials', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('token');
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->enum('bank',['Keshavarzi','Ayandeh','Parsian']);
+            $table->string('shaba_id');
+            $table->string('card_id');
+            $table->string('account_id');
+            $table->string('expire_time');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('credential');
     }
 };
